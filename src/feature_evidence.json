@@ -1,0 +1,246 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-implement-user-authentication-system-using-internet-identity-supporting-passkeys-google-apple-and-microsoft-login-methods-with-secure-session-management",
+      "featureTitle": "Implement user authentication system using Internet Identity supporting passkeys, Google, Apple, and Microsoft login methods with secure session management",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/LoginButton.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-user-profile-system-with-avatar-image-upload-status-message-field-username-display-and-profile-editing-capability",
+      "featureTitle": "Create user profile system with avatar image upload, status message field, username display, and profile editing capability",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ProfileEditModal.tsx",
+        "frontend/src/components/ProfileSetupModal.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-one-to-one-private-messaging-system-with-scrollable-chat-history-message-timestamps-auto-scroll-to-latest-message-and-ability-to-create-new-chats-by-searching-username",
+      "featureTitle": "Build one-to-one private messaging system with scrollable chat history, message timestamps, auto-scroll to latest message, and ability to create new chats by searching username",
+      "files": [
+        "frontend/src/components/ChatWindow.tsx",
+        "frontend/src/components/MessageBubble.tsx",
+        "frontend/src/components/MessageInput.tsx",
+        "frontend/src/components/NewChatModal.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-contact-list-sidebar-showing-all-conversations-with-last-message-preview-unread-message-counter-badge-and-delete-conversation-option",
+      "featureTitle": "Implement contact list sidebar showing all conversations with last message preview, unread message counter badge, and delete conversation option",
+      "files": [
+        "frontend/src/components/ConversationItem.tsx",
+        "frontend/src/components/ConversationList.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-group-chat-functionality-with-group-creation-member-add-remove-capability-group-name-and-avatar-settings-admin-role-assignment-and-display-of-sender-name-for-each-message-in-group",
+      "featureTitle": "Create group chat functionality with group creation, member add/remove capability, group name and avatar settings, admin role assignment, and display of sender name for each message in group",
+      "files": [
+        "frontend/src/components/ConversationItem.tsx",
+        "frontend/src/components/CreateGroupModal.tsx",
+        "frontend/src/components/GroupSettingsModal.tsx",
+        "frontend/src/components/MessageBubble.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-image-and-file-upload-system-with-support-for-images-jpg-png-and-documents-pdf-doc-in-chat-image-preview-and-file-download-functionality",
+      "featureTitle": "Implement image and file upload system with support for images (JPG, PNG) and documents (PDF, DOC), in-chat image preview, and file download functionality",
+      "files": [
+        "frontend/src/components/FileUploadButton.tsx",
+        "frontend/src/components/MessageBubble.tsx",
+        "frontend/src/components/MessageInput.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-message-editing-and-deletion-features-allowing-users-to-edit-or-delete-their-own-messages-within-5-minutes-of-sending-with-delete-for-everyone-option",
+      "featureTitle": "Add message editing and deletion features allowing users to edit or delete their own messages within 5 minutes of sending, with 'delete for everyone' option",
+      "files": [
+        "frontend/src/components/EditMessageModal.tsx",
+        "frontend/src/components/MessageActions.tsx",
+        "frontend/src/components/MessageBubble.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-search-functionality-within-conversations-to-find-specific-messages-by-text-content",
+      "featureTitle": "Implement search functionality within conversations to find specific messages by text content",
+      "files": [
+        "frontend/src/components/ChatHeader.tsx",
+        "frontend/src/components/ChatWindow.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-integrate-emoji-picker-component-allowing-users-to-insert-emojis-into-messages",
+      "featureTitle": "Integrate emoji picker component allowing users to insert emojis into messages",
+      "files": [
+        "frontend/src/components/EmojiPicker.tsx",
+        "frontend/src/components/MessageInput.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-whatsapp-inspired-responsive-ui-with-sidebar-for-chat-list-main-chat-window-with-rounded-message-bubbles-different-colors-for-sender-receiver-dark-light-mode-toggle-green-accent-color-theme-smooth-animations-and-mobile-desktop-responsive-layout",
+      "featureTitle": "Create WhatsApp-inspired responsive UI with sidebar for chat list, main chat window with rounded message bubbles (different colors for sender/receiver), dark/light mode toggle, green accent color theme, smooth animations, and mobile/desktop responsive layout",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/components/ThemeToggle.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-admin-panel-accessible-to-admin-users-showing-total-user-count-total-message-count-and-ability-to-disable-enable-user-accounts",
+      "featureTitle": "Build admin panel accessible to admin users showing total user count, total message count, and ability to disable/enable user accounts",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AdminPanel.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

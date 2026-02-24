@@ -1,0 +1,72 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-24T01:32:15.744Z",
+  "summary": "The implementation provides a comprehensive WhatsApp-style messaging application with Internet Identity authentication, user profiles, one-to-one and group messaging, file uploads, message editing/deletion, search functionality, emoji picker, responsive UI with dark/light mode, admin panel, and auto-refresh polling. The backend is implemented in a single Motoko actor as required. Most requirements are implemented, with a few gaps in file upload functionality and some admin features.",
+  "missing_requirements": [
+    {
+      "id": "REQ-6",
+      "requirement": "Implement image and file upload system with support for images (JPG, PNG) and documents (PDF, DOC), in-chat image preview, and file download functionality",
+      "reason": "FileUploadButton.tsx only sends file metadata as text messages rather than actual file attachments. No image preview or download functionality is implemented. The Message type in backend/main.mo does not include attachment fields.",
+      "evidence": [
+        "frontend/src/components/FileUploadButton.tsx"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "requirement": "Admin can view list of all users and disable/enable user accounts",
+      "reason": "AdminPanel.tsx shows total user and message counts but does not display a list of users or provide UI for disabling/enabling accounts. Backend has isUserActive checks but no exposed methods for listing users or toggling account status.",
+      "evidence": [
+        "frontend/src/components/AdminPanel.tsx",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Unread message counter badge appears on conversations with new messages",
+      "reason": "ConversationItem.tsx sets unreadCount to 0 with a comment 'Simplified for now'. No logic exists to track or display actual unread message counts.",
+      "evidence": [
+        "frontend/src/components/ConversationItem.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [],
+  "confidence": 0.85,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/AdminPanel.tsx",
+    "frontend/src/components/ChatHeader.tsx",
+    "frontend/src/components/ChatWindow.tsx",
+    "frontend/src/components/ConversationItem.tsx",
+    "frontend/src/components/ConversationList.tsx",
+    "frontend/src/components/CreateGroupModal.tsx",
+    "frontend/src/components/DeleteMessageDialog.tsx",
+    "frontend/src/components/EditMessageModal.tsx",
+    "frontend/src/components/EmojiPicker.tsx",
+    "frontend/src/components/FileUploadButton.tsx",
+    "frontend/src/components/GroupSettingsModal.tsx",
+    "frontend/src/components/Header.tsx",
+    "frontend/src/components/Layout.tsx",
+    "frontend/src/components/LoginButton.tsx",
+    "frontend/src/components/MessageActions.tsx",
+    "frontend/src/components/MessageBubble.tsx",
+    "frontend/src/components/MessageInput.tsx",
+    "frontend/src/components/NewChatModal.tsx",
+    "frontend/src/components/ProfileEditModal.tsx",
+    "frontend/src/components/ProfileSetupModal.tsx",
+    "frontend/src/components/ThemeToggle.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

@@ -1,0 +1,435 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "ChatFlow - WhatsApp-style messaging application frontend implementation",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Implement Internet Identity authentication with secure session management",
+      "acceptanceCriteria": [
+        "Users can register and login using Internet Identity",
+        "Support for passkeys and social login (Google, Apple, Microsoft)",
+        "Secure session management with logout functionality",
+        "Users remain authenticated across page refreshes"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/LoginButton.tsx",
+          "operation": "create",
+          "description": "Create login/logout button component using the authorization component's useInternetIdentity hook with proper state management and error handling for authentication flows"
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add authentication state check and render LoginButton when user is not authenticated, ensuring all application data is only accessible after login"
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Create user profile system with avatar upload, status message, username display, and profile editing",
+      "acceptanceCriteria": [
+        "Users can upload and change their profile avatar image",
+        "Users can set and update a text status message",
+        "Profile displays username clearly",
+        "Profile page shows all user information with edit functionality"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useUserProfile.ts",
+          "operation": "create",
+          "description": "Create custom hook wrapping getCallerUserProfile and saveCallerUserProfile backend methods using react-query, implementing proper loading states and following the authorization component's pattern to prevent profile setup modal flash. Use the blob-storage component's ExternalBlob class for avatar handling. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ProfileSetupModal.tsx",
+          "operation": "create",
+          "description": "Create modal dialog for first-time profile setup prompting for username, status message, and optional avatar upload using blob-storage ExternalBlob.fromBytes for avatar handling. Show only when user is authenticated and has no profile. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ProfileEditModal.tsx",
+          "operation": "create",
+          "description": "Create modal for editing existing user profile allowing username, status, and avatar changes using blob-storage ExternalBlob for avatar handling with upload progress tracking via withUploadProgress. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Integrate ProfileSetupModal to show when authenticated user has no profile, ensuring proper conditional rendering based on authentication and profile state from useUserProfile hook"
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Build one-to-one private messaging system with scrollable chat history, timestamps, auto-scroll, and username search for new chats",
+      "acceptanceCriteria": [
+        "Users can send and receive private messages to other users",
+        "Chat history displays all messages in chronological order",
+        "Each message shows timestamp",
+        "Chat window auto-scrolls to show latest message",
+        "Users can initiate new chats by searching for usernames",
+        "Message history persists across sessions"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useConversations.ts",
+          "operation": "create",
+          "description": "Create hook wrapping getConversations backend method using react-query to fetch all user conversations with caching and automatic refetch support"
+        },
+        {
+          "path": "frontend/src/hooks/useChatHistory.ts",
+          "operation": "create",
+          "description": "Create hook wrapping getChatHistory backend method using react-query to fetch messages for a specific chat with proper dependency on chatId parameter"
+        },
+        {
+          "path": "frontend/src/hooks/useSendMessage.ts",
+          "operation": "create",
+          "description": "Create mutation hook wrapping sendMessage backend method using react-query mutations with optimistic updates and query invalidation"
+        },
+        {
+          "path": "frontend/src/hooks/useSearchUser.ts",
+          "operation": "create",
+          "description": "Create hook wrapping searchUserByUsername backend method to enable username-based user search for initiating new conversations"
+        },
+        {
+          "path": "frontend/src/hooks/useCreateChat.ts",
+          "operation": "create",
+          "description": "Create mutation hook wrapping createChat backend method to handle creation of new one-to-one and group conversations"
+        },
+        {
+          "path": "frontend/src/components/ChatWindow.tsx",
+          "operation": "create",
+          "description": "Create main chat window component displaying scrollable message list with timestamps, message bubbles styled differently for sent vs received messages, auto-scroll to bottom on new messages using useRef and useEffect"
+        },
+        {
+          "path": "frontend/src/components/MessageInput.tsx",
+          "operation": "create",
+          "description": "Create message input component with text area and send button, integrating useSendMessage hook for message submission"
+        },
+        {
+          "path": "frontend/src/components/NewChatModal.tsx",
+          "operation": "create",
+          "description": "Create modal for initiating new chats with username search input using useSearchUser hook and createChat functionality for starting one-to-one conversations"
+        },
+        {
+          "path": "frontend/src/components/MessageBubble.tsx",
+          "operation": "create",
+          "description": "Create message bubble component displaying message content, sender name, timestamp, and edit/delete indicators with WhatsApp-style rounded bubbles and color differentiation"
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Implement contact list sidebar with conversation previews, unread counters, and delete conversation option",
+      "acceptanceCriteria": [
+        "Sidebar displays list of all user conversations",
+        "Each contact shows preview of last message sent/received",
+        "Unread message count badge appears on conversations with new messages",
+        "Users can delete entire conversations",
+        "Clicking a contact opens that conversation in main chat window"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useDeleteConversation.ts",
+          "operation": "create",
+          "description": "Create mutation hook wrapping deleteConversation backend method with optimistic updates and conversation list invalidation"
+        },
+        {
+          "path": "frontend/src/components/ConversationList.tsx",
+          "operation": "create",
+          "description": "Create sidebar component displaying all conversations using useConversations hook, showing last message preview, unread badge counts, and delete buttons for each conversation with click handlers to select active chat"
+        },
+        {
+          "path": "frontend/src/components/ConversationItem.tsx",
+          "operation": "create",
+          "description": "Create individual conversation list item component showing contact/group name, avatar, last message preview, timestamp, unread count badge, and delete icon with proper styling for active/inactive states"
+        },
+        {
+          "path": "frontend/src/hooks/useUnreadCount.ts",
+          "operation": "create",
+          "description": "Create hook to calculate unread message counts per conversation by comparing message timestamps with user's last read timestamp"
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Create group chat functionality with creation, member management, group settings, admin roles, and sender name display",
+      "acceptanceCriteria": [
+        "Users can create new group chats and set group name",
+        "Group creator becomes admin automatically",
+        "Admin can add and remove members from group",
+        "Groups support custom avatar upload",
+        "Each message in group clearly shows who sent it",
+        "Admin role is visible and can be transferred",
+        "Group conversations appear in contact list sidebar"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useGroupOperations.ts",
+          "operation": "create",
+          "description": "Create hooks wrapping addGroupMember, removeGroupMember, assignGroupAdmin, and updateGroupSettings backend methods using react-query mutations for group management operations"
+        },
+        {
+          "path": "frontend/src/components/CreateGroupModal.tsx",
+          "operation": "create",
+          "description": "Create modal for group chat creation with group name input, member selection via username search, and optional group avatar upload using blob-storage ExternalBlob with upload progress tracking. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/GroupSettingsModal.tsx",
+          "operation": "create",
+          "description": "Create modal for editing group settings including name, avatar, member list with add/remove controls, and admin role management, accessible only to group admins using blob-storage ExternalBlob for avatar handling. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/MessageBubble.tsx",
+          "operation": "modify",
+          "description": "Enhance MessageBubble to display sender username for group messages by fetching sender's UserProfile and showing their username above message content"
+        },
+        {
+          "path": "frontend/src/components/ConversationItem.tsx",
+          "operation": "modify",
+          "description": "Update ConversationItem to handle group chat display showing group name, group avatar using blob-storage ExternalBlob.getDirectURL for image rendering, and group-specific indicators. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Implement image and file upload system with preview, download, and supported file types",
+      "acceptanceCriteria": [
+        "Users can upload and send image files in chats",
+        "Users can upload and send document files (PDF, DOC, etc.)",
+        "Images display as previews directly in chat bubbles",
+        "Files show with download button and filename",
+        "Attachments persist and remain downloadable",
+        "File size limits are enforced appropriately"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/FileUploadButton.tsx",
+          "operation": "create",
+          "description": "Create file upload button component with file input handling for images (JPG, PNG) and documents (PDF, DOC) using blob-storage ExternalBlob.fromBytes for file conversion and withUploadProgress for progress tracking. Include file size validation before upload. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/MessageInput.tsx",
+          "operation": "modify",
+          "description": "Integrate FileUploadButton into message input area allowing users to attach files to messages with visual feedback during upload"
+        },
+        {
+          "path": "frontend/src/components/MessageBubble.tsx",
+          "operation": "modify",
+          "description": "Enhance MessageBubble to render image attachments as inline previews using blob-storage ExternalBlob.getDirectURL for streaming and caching, and document attachments with download buttons. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ImagePreview.tsx",
+          "operation": "create",
+          "description": "Create image preview component for displaying uploaded images within chat bubbles using blob-storage ExternalBlob.getDirectURL to leverage streaming and caching. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/FileAttachment.tsx",
+          "operation": "create",
+          "description": "Create file attachment component showing file name, size, and download button using blob-storage ExternalBlob.getBytes for download functionality. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Add message editing and deletion features with 5-minute time limit and delete for everyone option",
+      "acceptanceCriteria": [
+        "Users can edit their own messages within 5 minutes",
+        "Users can delete their own messages within 5 minutes",
+        "Delete option includes 'delete for everyone' removing message from all participants",
+        "Edited messages show 'edited' indicator",
+        "After 5 minutes, edit and delete options are disabled"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useMessageOperations.ts",
+          "operation": "create",
+          "description": "Create mutation hooks wrapping editMessage and deleteMessage backend methods with proper timestamp validation for 5-minute rule enforcement and query invalidation after operations"
+        },
+        {
+          "path": "frontend/src/components/MessageActions.tsx",
+          "operation": "create",
+          "description": "Create message actions menu component showing edit and delete options, visible only for user's own messages within 5 minutes of sending, using timestamp comparison with current time. Include 'delete for everyone' checkbox in delete confirmation dialog"
+        },
+        {
+          "path": "frontend/src/components/MessageBubble.tsx",
+          "operation": "modify",
+          "description": "Integrate MessageActions menu into MessageBubble with owner verification using authorization component's identity comparison pattern, showing edit/delete options only for user's own messages. Display 'edited' indicator when message.isEdited is true"
+        },
+        {
+          "path": "frontend/src/components/EditMessageModal.tsx",
+          "operation": "create",
+          "description": "Create modal for editing message content with text input pre-filled with existing content and save/cancel buttons using useMessageOperations hook"
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Implement search functionality within conversations to find specific messages",
+      "acceptanceCriteria": [
+        "Search input field appears in chat header",
+        "Search filters messages by text content in real-time",
+        "Search results highlight matching messages",
+        "Search works across entire conversation history"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useMessageSearch.ts",
+          "operation": "create",
+          "description": "Create hook wrapping searchMessages backend method using react-query with debounced search input to avoid excessive backend calls"
+        },
+        {
+          "path": "frontend/src/components/ChatHeader.tsx",
+          "operation": "create",
+          "description": "Create chat header component displaying conversation name, avatar, and search input field using useMessageSearch hook with real-time filtering as user types"
+        },
+        {
+          "path": "frontend/src/components/ChatWindow.tsx",
+          "operation": "modify",
+          "description": "Integrate ChatHeader into ChatWindow and implement search result highlighting by filtering displayed messages based on search results with visual indicators for matched messages"
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Integrate emoji picker component for inserting emojis into messages",
+      "acceptanceCriteria": [
+        "Emoji picker button appears in message input area",
+        "Clicking button opens emoji selection panel",
+        "Users can browse and select emojis",
+        "Selected emoji inserts at cursor position in message input",
+        "Emojis render correctly in sent messages"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/package.json",
+          "operation": "modify",
+          "description": "Add emoji-picker-react package dependency for emoji selection functionality"
+        },
+        {
+          "path": "frontend/src/components/EmojiPicker.tsx",
+          "operation": "create",
+          "description": "Create emoji picker wrapper component using emoji-picker-react library with button trigger and popover panel for emoji selection"
+        },
+        {
+          "path": "frontend/src/components/MessageInput.tsx",
+          "operation": "modify",
+          "description": "Integrate EmojiPicker component into message input area with callback to insert selected emoji at cursor position in text area, maintaining cursor position and focus"
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Create WhatsApp-inspired responsive UI with sidebar, rounded message bubbles, dark/light mode, green theme, and smooth animations",
+      "acceptanceCriteria": [
+        "Layout includes left sidebar with chat list and main chat window area",
+        "Message bubbles are rounded with distinct colors for sent vs received messages",
+        "Green accent color applied consistently throughout UI (similar to WhatsApp)",
+        "Dark mode and light mode toggle button functional",
+        "All UI elements respect current theme (dark/light)",
+        "Layout adapts responsively for mobile screens and desktop screens",
+        "Smooth transitions and animations on interactions",
+        "Minimalist, clean design with soft color palette"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Configure Tailwind theme with WhatsApp-inspired green accent colors (#25D366 for primary green), soft color palette for light/dark modes, custom rounded message bubble utilities, and responsive breakpoints for mobile/desktop layouts"
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add global CSS variables for theme colors supporting dark/light mode, smooth transition classes for animations, and base styling for message bubbles with distinct sent/received colors using green accent"
+        },
+        {
+          "path": "frontend/src/hooks/useTheme.ts",
+          "operation": "create",
+          "description": "Create custom hook for managing dark/light theme state with localStorage persistence and CSS class toggling on document root element"
+        },
+        {
+          "path": "frontend/src/components/ThemeToggle.tsx",
+          "operation": "create",
+          "description": "Create theme toggle button component with sun/moon icons using useTheme hook to switch between dark and light modes"
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "create",
+          "description": "Create main layout component with two-column responsive design: left sidebar for conversation list and right main area for chat window, using CSS Grid or Flexbox with mobile breakpoint switching to single column with slide-out sidebar"
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wrap application content in Layout component integrating sidebar (ConversationList) and main chat area (ChatWindow), add ThemeToggle button to app header, and ensure all components respect theme context"
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Build admin panel showing user/message counts and user account management",
+      "acceptanceCriteria": [
+        "Admin panel route accessible only to admin users",
+        "Dashboard displays total number of registered users",
+        "Dashboard displays total number of messages sent",
+        "Admin can view list of all users",
+        "Admin can disable user accounts preventing their login",
+        "Admin can re-enable disabled accounts",
+        "Non-admin users cannot access admin panel"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useAdminStats.ts",
+          "operation": "create",
+          "description": "Create hooks wrapping getTotalUserCount, getTotalMessageCount, and isCallerAdmin backend methods using react-query for admin statistics"
+        },
+        {
+          "path": "frontend/src/hooks/useUserManagement.ts",
+          "operation": "create",
+          "description": "Create mutation hooks wrapping disableUser and enableUser backend methods for admin user account management with proper query invalidation"
+        },
+        {
+          "path": "frontend/src/components/AdminPanel.tsx",
+          "operation": "create",
+          "description": "Create admin panel page component displaying total user count, total message count, and user management table with enable/disable controls using useAdminStats and useUserManagement hooks. Include admin-only access guard using isCallerAdmin check with unauthorized redirect"
+        },
+        {
+          "path": "frontend/src/components/AdminRoute.tsx",
+          "operation": "create",
+          "description": "Create protected route wrapper component that verifies admin status using isCallerAdmin backend method before rendering admin-only components, redirecting unauthorized users to main app"
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add route for admin panel at /admin path wrapped in AdminRoute guard component with navigation link visible only to admin users after authentication"
+        }
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "summary": "Implement auto-refresh polling mechanism checking for new messages every 3-5 seconds",
+      "acceptanceCriteria": [
+        "Frontend automatically polls backend for new messages every 3-5 seconds",
+        "New messages appear in chat without user action",
+        "Polling occurs only when chat is open and user is active",
+        "Unread message counters update automatically",
+        "Last message previews in sidebar refresh automatically",
+        "Polling stops when user logs out or closes app"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useConversations.ts",
+          "operation": "modify",
+          "description": "Configure react-query to automatically refetch conversations every 4 seconds using refetchInterval option, with refetchIntervalInBackground set to false to pause polling when tab is inactive"
+        },
+        {
+          "path": "frontend/src/hooks/useChatHistory.ts",
+          "operation": "modify",
+          "description": "Configure react-query to automatically refetch chat history every 4 seconds using refetchInterval option, enabled only when chat is open and user is authenticated, with refetchIntervalInBackground set to false"
+        },
+        {
+          "path": "frontend/src/hooks/usePollingControl.ts",
+          "operation": "create",
+          "description": "Create hook to manage polling lifecycle based on authentication state and page visibility, stopping all polling queries on logout using react-query's QueryClient to disable refetch intervals when user is not authenticated"
+        }
+      ]
+    }
+  ]
+}

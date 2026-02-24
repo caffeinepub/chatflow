@@ -1,0 +1,202 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "ChatFlow - A full-stack web messaging application similar to WhatsApp with modern UI, polling-based message updates, user authentication, private and group messaging, media sharing, and admin panel",
+  "architectural_notes": [
+    "Polling-based message updates (every few seconds) instead of WebSockets",
+    "Internet Identity for authentication (passkeys + Google/Apple/Microsoft)",
+    "Database collections: Users, Conversations, Messages, Groups",
+    "Message editing/deletion limited to 5 minutes after sending",
+    "Green accent color theme similar to WhatsApp",
+    "Sender and receiver use different message bubble colors"
+  ],
+  "known_issues": [
+    "No real-time WebSocket support - using polling instead",
+    "No typing indicators or live online/offline status",
+    "No browser push notifications",
+    "Email verification requires paid subscription"
+  ],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-implement-user-authentication-system-using-internet-identity-supporting-passkeys-google-apple-and-microsoft-login-methods-with-secure-session-management",
+      "title": "Implement user authentication system using Internet Identity supporting passkeys, Google, Apple, and Microsoft login methods with secure session management",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-user-profile-system-with-avatar-image-upload-status-message-field-username-display-and-profile-editing-capability",
+      "title": "Create user profile system with avatar image upload, status message field, username display, and profile editing capability",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-one-to-one-private-messaging-system-with-scrollable-chat-history-message-timestamps-auto-scroll-to-latest-message-and-ability-to-create-new-chats-by-searching-username",
+      "title": "Build one-to-one private messaging system with scrollable chat history, message timestamps, auto-scroll to latest message, and ability to create new chats by searching username",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-contact-list-sidebar-showing-all-conversations-with-last-message-preview-unread-message-counter-badge-and-delete-conversation-option",
+      "title": "Implement contact list sidebar showing all conversations with last message preview, unread message counter badge, and delete conversation option",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-group-chat-functionality-with-group-creation-member-add-remove-capability-group-name-and-avatar-settings-admin-role-assignment-and-display-of-sender-name-for-each-message-in-group",
+      "title": "Create group chat functionality with group creation, member add/remove capability, group name and avatar settings, admin role assignment, and display of sender name for each message in group",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-image-and-file-upload-system-with-support-for-images-jpg-png-and-documents-pdf-doc-in-chat-image-preview-and-file-download-functionality",
+      "title": "Implement image and file upload system with support for images (JPG, PNG) and documents (PDF, DOC), in-chat image preview, and file download functionality",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-message-editing-and-deletion-features-allowing-users-to-edit-or-delete-their-own-messages-within-5-minutes-of-sending-with-delete-for-everyone-option",
+      "title": "Add message editing and deletion features allowing users to edit or delete their own messages within 5 minutes of sending, with 'delete for everyone' option",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-search-functionality-within-conversations-to-find-specific-messages-by-text-content",
+      "title": "Implement search functionality within conversations to find specific messages by text content",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-emoji-picker-component-allowing-users-to-insert-emojis-into-messages",
+      "title": "Integrate emoji picker component allowing users to insert emojis into messages",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-whatsapp-inspired-responsive-ui-with-sidebar-for-chat-list-main-chat-window-with-rounded-message-bubbles-different-colors-for-sender-receiver-dark-light-mode-toggle-green-accent-color-theme-smooth-animations-and-mobile-desktop-responsive-layout",
+      "title": "Create WhatsApp-inspired responsive UI with sidebar for chat list, main chat window with rounded message bubbles (different colors for sender/receiver), dark/light mode toggle, green accent color theme, smooth animations, and mobile/desktop responsive layout",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-admin-panel-accessible-to-admin-users-showing-total-user-count-total-message-count-and-ability-to-disable-enable-user-accounts",
+      "title": "Build admin panel accessible to admin users showing total user count, total message count, and ability to disable/enable user accounts",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "User authentication system with Internet Identity (passkeys + social login)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "User profile page with avatar upload and status message",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "One-to-one private messaging with chat history",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Contact list sidebar with last message preview",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Group chat with member management and admin roles",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Image and file upload/sharing with preview and download",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Message editing and deletion within 5 minutes",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Search functionality within conversations",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Emoji picker integration",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "WhatsApp-inspired UI with dark/light mode toggle",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Responsive layout for mobile and desktop",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Admin panel to view statistics and manage users",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Auto-refresh messages using polling mechanism",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Implement auto-refresh polling mechanism that checks for new messages every 3-5 seconds and updates chat UI without requiring manual page refresh",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "ChatFlow",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

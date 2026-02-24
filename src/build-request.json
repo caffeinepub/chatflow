@@ -1,0 +1,245 @@
+{
+  "kind": "build_request",
+  "title": "Build ChatFlow - WhatsApp-style messaging application",
+  "projectName": "ChatFlow",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Implement user authentication system using Internet Identity supporting passkeys, Google, Apple, and Microsoft login methods with secure session management",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can register and login using Internet Identity",
+        "Support for passkeys and social login (Google, Apple, Microsoft)",
+        "Secure session management with logout functionality",
+        "Users remain authenticated across page refreshes"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Create user profile system with avatar image upload, status message field, username display, and profile editing capability",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can upload and change their profile avatar image",
+        "Users can set and update a text status message",
+        "Profile displays username clearly",
+        "Profile page shows all user information with edit functionality"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Build one-to-one private messaging system with scrollable chat history, message timestamps, auto-scroll to latest message, and ability to create new chats by searching username",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can send and receive private messages to other users",
+        "Chat history displays all messages in chronological order",
+        "Each message shows timestamp",
+        "Chat window auto-scrolls to show latest message",
+        "Users can initiate new chats by searching for usernames",
+        "Message history persists across sessions"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Implement contact list sidebar showing all conversations with last message preview, unread message counter badge, and delete conversation option",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Sidebar displays list of all user conversations",
+        "Each contact shows preview of last message sent/received",
+        "Unread message count badge appears on conversations with new messages",
+        "Users can delete entire conversations",
+        "Clicking a contact opens that conversation in main chat window"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Create group chat functionality with group creation, member add/remove capability, group name and avatar settings, admin role assignment, and display of sender name for each message in group",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can create new group chats and set group name",
+        "Group creator becomes admin automatically",
+        "Admin can add and remove members from group",
+        "Groups support custom avatar upload",
+        "Each message in group clearly shows who sent it",
+        "Admin role is visible and can be transferred",
+        "Group conversations appear in contact list sidebar"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Implement image and file upload system with support for images (JPG, PNG) and documents (PDF, DOC), in-chat image preview, and file download functionality",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can upload and send image files in chats",
+        "Users can upload and send document files (PDF, DOC, etc.)",
+        "Images display as previews directly in chat bubbles",
+        "Files show with download button and filename",
+        "Attachments persist and remain downloadable",
+        "File size limits are enforced appropriately"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Add message editing and deletion features allowing users to edit or delete their own messages within 5 minutes of sending, with 'delete for everyone' option",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can edit their own messages within 5 minutes",
+        "Users can delete their own messages within 5 minutes",
+        "Delete option includes 'delete for everyone' removing message from all participants",
+        "Edited messages show 'edited' indicator",
+        "After 5 minutes, edit and delete options are disabled"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Implement search functionality within conversations to find specific messages by text content",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Search input field appears in chat header",
+        "Search filters messages by text content in real-time",
+        "Search results highlight matching messages",
+        "Search works across entire conversation history"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Integrate emoji picker component allowing users to insert emojis into messages",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Emoji picker button appears in message input area",
+        "Clicking button opens emoji selection panel",
+        "Users can browse and select emojis",
+        "Selected emoji inserts at cursor position in message input",
+        "Emojis render correctly in sent messages"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Create WhatsApp-inspired responsive UI with sidebar for chat list, main chat window with rounded message bubbles (different colors for sender/receiver), dark/light mode toggle, green accent color theme, smooth animations, and mobile/desktop responsive layout",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2",
+          "msg-6"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Layout includes left sidebar with chat list and main chat window area",
+        "Message bubbles are rounded with distinct colors for sent vs received messages",
+        "Green accent color applied consistently throughout UI (similar to WhatsApp)",
+        "Dark mode and light mode toggle button functional",
+        "All UI elements respect current theme (dark/light)",
+        "Layout adapts responsively for mobile screens and desktop screens",
+        "Smooth transitions and animations on interactions",
+        "Minimalist, clean design with soft color palette"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "text": "Build admin panel accessible to admin users showing total user count, total message count, and ability to disable/enable user accounts",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin panel route accessible only to admin users",
+        "Dashboard displays total number of registered users",
+        "Dashboard displays total number of messages sent",
+        "Admin can view list of all users",
+        "Admin can disable user accounts preventing their login",
+        "Admin can re-enable disabled accounts",
+        "Non-admin users cannot access admin panel"
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "text": "Implement auto-refresh polling mechanism that checks for new messages every 3-5 seconds and updates chat UI without requiring manual page refresh",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4",
+          "msg-6"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Frontend automatically polls backend for new messages every 3-5 seconds",
+        "New messages appear in chat without user action",
+        "Polling occurs only when chat is open and user is active",
+        "Unread message counters update automatically",
+        "Last message previews in sidebar refresh automatically",
+        "Polling stops when user logs out or closes app"
+      ]
+    }
+  ],
+  "constraints": [
+    "Must use single-actor Motoko architecture for all backend logic in backend/main.mo",
+    "Cannot modify immutable frontend paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui",
+    "Must use Internet Identity for authentication (no traditional email/password)",
+    "Cannot implement real-time WebSocket connections - use polling instead",
+    "Cannot implement typing indicators or live online/offline status",
+    "Cannot implement browser push notifications",
+    "Message refresh must use polling (3-5 second intervals), not real-time connections"
+  ],
+  "nonGoals": [
+    "Email verification system (requires paid subscription)",
+    "Real-time WebSocket messaging",
+    "Typing indicators",
+    "Live online/offline status updates",
+    "Browser push notifications",
+    "SMS notifications",
+    "Traditional email/password authentication",
+    "Video or voice calling features",
+    "End-to-end encryption indicators"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}
