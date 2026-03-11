@@ -1,11 +1,3 @@
-import { useInternetIdentity } from '../hooks/useInternetIdentity';
-import { useGetUserProfile, useDeleteConversation } from '../hooks/useQueries';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Trash2 } from 'lucide-react';
-import { formatDistanceToNow } from 'date-fns';
-import { Principal } from '@icp-sdk/core/principal';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,8 +8,15 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import { toast } from 'sonner';
+} from "@/components/ui/alert-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import type { Principal } from "@icp-sdk/core/principal";
+import { formatDistanceToNow } from "date-fns";
+import { Trash2 } from "lucide-react";
+import { toast } from "sonner";
+import { useDeleteConversation, useGetUserProfile } from "../hooks/useQueries";
 
 interface ConversationItemProps {
   conversation: {
@@ -36,21 +35,24 @@ interface ConversationItemProps {
   currentUserPrincipal?: Principal;
 }
 
-export default function ConversationItem({ conversation, isSelected, onSelect }: ConversationItemProps) {
-  const { identity } = useInternetIdentity();
+export default function ConversationItem({
+  conversation,
+  isSelected,
+  onSelect,
+}: ConversationItemProps) {
   const deleteConversation = useDeleteConversation();
-  
+
   const lastMessage = conversation.messages[conversation.messages.length - 1];
   const isGroup = !!conversation.groupName;
-  
+
   // For one-on-one chats, get the other participant
   const otherParticipant = !isGroup && lastMessage ? lastMessage.sender : null;
   const { data: otherUserProfile } = useGetUserProfile(otherParticipant);
 
-  const displayName = isGroup 
-    ? conversation.groupName 
-    : otherUserProfile?.username || 'Unknown User';
-  
+  const displayName = isGroup
+    ? conversation.groupName
+    : otherUserProfile?.username || "Unknown User";
+
   const displayAvatar = isGroup
     ? conversation.groupAvatar?.getDirectURL()
     : otherUserProfile?.avatar?.getDirectURL();
@@ -61,23 +63,24 @@ export default function ConversationItem({ conversation, isSelected, onSelect }:
     e.stopPropagation();
     try {
       await deleteConversation.mutateAsync(conversation.chatId);
-      toast.success('Conversation deleted');
-    } catch (error) {
-      toast.error('Failed to delete conversation');
+      toast.success("Conversation deleted");
+    } catch (_error) {
+      toast.error("Failed to delete conversation");
     }
   };
 
   return (
+    // biome-ignore lint/a11y/useKeyWithClickEvents: interactive list item
     <div
       onClick={onSelect}
       className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-colors hover:bg-accent/50 ${
-        isSelected ? 'bg-accent' : ''
+        isSelected ? "bg-accent" : ""
       }`}
     >
       <Avatar className="h-12 w-12">
         <AvatarImage src={displayAvatar} />
         <AvatarFallback className="bg-primary/10">
-          {displayName?.charAt(0).toUpperCase() || '?'}
+          {displayName?.charAt(0).toUpperCase() || "?"}
         </AvatarFallback>
       </Avatar>
 
@@ -86,13 +89,15 @@ export default function ConversationItem({ conversation, isSelected, onSelect }:
           <h3 className="font-medium truncate">{displayName}</h3>
           {lastMessage && (
             <span className="text-xs text-muted-foreground">
-              {formatDistanceToNow(Number(lastMessage.timestamp) / 1_000_000, { addSuffix: true })}
+              {formatDistanceToNow(Number(lastMessage.timestamp) / 1_000_000, {
+                addSuffix: true,
+              })}
             </span>
           )}
         </div>
         <div className="flex items-center justify-between">
           <p className="text-sm text-muted-foreground truncate">
-            {lastMessage ? lastMessage.content : 'No messages yet'}
+            {lastMessage ? lastMessage.content : "No messages yet"}
           </p>
           {unreadCount > 0 && (
             <Badge variant="default" className="ml-2 h-5 min-w-5 px-1.5">
@@ -116,12 +121,16 @@ export default function ConversationItem({ conversation, isSelected, onSelect }:
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Conversation</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this conversation? This action cannot be undone.
+              Are you sure you want to delete this conversation? This action
+              cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+            <AlertDialogAction
+              onClick={handleDelete}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>

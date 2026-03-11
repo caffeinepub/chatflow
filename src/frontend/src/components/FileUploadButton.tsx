@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { useSendMessage } from '../hooks/useQueries';
-import { Button } from '@/components/ui/button';
-import { Paperclip, Loader2 } from 'lucide-react';
-import { toast } from 'sonner';
-import { ExternalBlob } from '../backend';
+import { Button } from "@/components/ui/button";
+import { Loader2, Paperclip } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { ExternalBlob } from "../backend";
+import { useSendMessage } from "../hooks/useQueries";
 
 interface FileUploadButtonProps {
   chatId: string;
@@ -20,7 +20,7 @@ export default function FileUploadButton({ chatId }: FileUploadButtonProps) {
 
     const maxSize = 10 * 1024 * 1024; // 10MB
     if (file.size > maxSize) {
-      toast.error('File must be less than 10MB');
+      toast.error("File must be less than 10MB");
       return;
     }
 
@@ -28,10 +28,12 @@ export default function FileUploadButton({ chatId }: FileUploadButtonProps) {
       setUploading(true);
       const arrayBuffer = await file.arrayBuffer();
       const uint8Array = new Uint8Array(arrayBuffer);
-      
-      const blob = ExternalBlob.fromBytes(uint8Array).withUploadProgress((percentage) => {
-        setUploadProgress(percentage);
-      });
+
+      const _blob = ExternalBlob.fromBytes(uint8Array).withUploadProgress(
+        (percentage) => {
+          setUploadProgress(percentage);
+        },
+      );
 
       // For now, send file info as text message
       // In a real implementation, you'd extend the Message type to support attachments
@@ -40,11 +42,11 @@ export default function FileUploadButton({ chatId }: FileUploadButtonProps) {
         content: `📎 ${file.name} (${(file.size / 1024).toFixed(2)} KB)`,
       });
 
-      toast.success('File uploaded successfully');
-      e.target.value = '';
+      toast.success("File uploaded successfully");
+      e.target.value = "";
     } catch (error) {
-      console.error('File upload error:', error);
-      toast.error('Failed to upload file');
+      console.error("File upload error:", error);
+      toast.error("Failed to upload file");
     } finally {
       setUploading(false);
       setUploadProgress(0);
@@ -61,7 +63,13 @@ export default function FileUploadButton({ chatId }: FileUploadButtonProps) {
         disabled={uploading}
       />
       <label htmlFor="file-upload">
-        <Button type="button" variant="ghost" size="icon" disabled={uploading} asChild>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          disabled={uploading}
+          asChild
+        >
           <span className="cursor-pointer">
             {uploading ? (
               <Loader2 className="h-5 w-5 animate-spin" />

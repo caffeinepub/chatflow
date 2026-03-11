@@ -1,11 +1,16 @@
-import { useState, useEffect } from 'react';
-import { useEditMessage } from '../hooks/useQueries';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Loader2 } from 'lucide-react';
-import { toast } from 'sonner';
-import { Principal } from '@icp-sdk/core/principal';
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import type { Principal } from "@icp-sdk/core/principal";
+import { Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { useEditMessage } from "../hooks/useQueries";
 
 interface EditMessageModalProps {
   message: {
@@ -18,15 +23,19 @@ interface EditMessageModalProps {
   onClose: () => void;
 }
 
-export default function EditMessageModal({ message, chatId, onClose }: EditMessageModalProps) {
+export default function EditMessageModal({
+  message,
+  chatId,
+  onClose,
+}: EditMessageModalProps) {
   const [content, setContent] = useState(message.content);
   const editMessage = useEditMessage();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!content.trim()) {
-      toast.error('Message cannot be empty');
+      toast.error("Message cannot be empty");
       return;
     }
 
@@ -36,10 +45,10 @@ export default function EditMessageModal({ message, chatId, onClose }: EditMessa
         timestamp: message.timestamp,
         newContent: content.trim(),
       });
-      toast.success('Message edited successfully');
+      toast.success("Message edited successfully");
       onClose();
-    } catch (error) {
-      toast.error('Failed to edit message');
+    } catch (_error) {
+      toast.error("Failed to edit message");
     }
   };
 
@@ -77,7 +86,7 @@ export default function EditMessageModal({ message, chatId, onClose }: EditMessa
                   Saving...
                 </>
               ) : (
-                'Save Changes'
+                "Save Changes"
               )}
             </Button>
           </div>

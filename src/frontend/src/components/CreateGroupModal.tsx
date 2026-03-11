@@ -1,29 +1,41 @@
-import { useState } from 'react';
-import { useSearchUser, useCreateChat, useGetUserProfile } from '../hooks/useQueries';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Camera, Loader2, Search, X } from 'lucide-react';
-import { toast } from 'sonner';
-import { Principal } from '@icp-sdk/core/principal';
-import { ExternalBlob } from '../backend';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import type { Principal } from "@icp-sdk/core/principal";
+import { Camera, Loader2, Search, X } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { ExternalBlob } from "../backend";
+import {
+  useCreateChat,
+  useGetUserProfile,
+  useSearchUser,
+} from "../hooks/useQueries";
 
 interface CreateGroupModalProps {
   onClose: () => void;
   onGroupCreated: (chatId: string) => void;
 }
 
-export default function CreateGroupModal({ onClose, onGroupCreated }: CreateGroupModalProps) {
-  const [groupName, setGroupName] = useState('');
-  const [username, setUsername] = useState('');
+export default function CreateGroupModal({
+  onClose,
+  onGroupCreated,
+}: CreateGroupModalProps) {
+  const [groupName, setGroupName] = useState("");
+  const [username, setUsername] = useState("");
   const [members, setMembers] = useState<Principal[]>([]);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
-  const [avatarPreview, setAvatarPreview] = useState<string>('');
+  const [avatarPreview, setAvatarPreview] = useState<string>("");
   const [uploadProgress, setUploadProgress] = useState(0);
-  
+
   const searchUser = useSearchUser();
   const createChat = useCreateChat();
   const { data: foundUserProfile } = useGetUserProfile(searchUser.data || null);
@@ -35,24 +47,24 @@ export default function CreateGroupModal({ onClose, onGroupCreated }: CreateGrou
 
   const handleAddMember = () => {
     if (!searchUser.data) return;
-    if (members.some(m => m.toString() === searchUser.data!.toString())) {
-      toast.error('User already added');
+    if (members.some((m) => m.toString() === searchUser.data!.toString())) {
+      toast.error("User already added");
       return;
     }
     setMembers([...members, searchUser.data]);
-    setUsername('');
+    setUsername("");
     searchUser.reset();
   };
 
   const handleRemoveMember = (principal: Principal) => {
-    setMembers(members.filter(m => m.toString() !== principal.toString()));
+    setMembers(members.filter((m) => m.toString() !== principal.toString()));
   };
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        toast.error('Image must be less than 5MB');
+        toast.error("Image must be less than 5MB");
         return;
       }
       setAvatarFile(file);
@@ -66,23 +78,25 @@ export default function CreateGroupModal({ onClose, onGroupCreated }: CreateGrou
 
   const handleCreateGroup = async () => {
     if (!groupName.trim()) {
-      toast.error('Please enter a group name');
+      toast.error("Please enter a group name");
       return;
     }
     if (members.length === 0) {
-      toast.error('Please add at least one member');
+      toast.error("Please add at least one member");
       return;
     }
 
     try {
       let avatarBlob: ExternalBlob | null = null;
-      
+
       if (avatarFile) {
         const arrayBuffer = await avatarFile.arrayBuffer();
         const uint8Array = new Uint8Array(arrayBuffer);
-        avatarBlob = ExternalBlob.fromBytes(uint8Array).withUploadProgress((percentage) => {
-          setUploadProgress(percentage);
-        });
+        avatarBlob = ExternalBlob.fromBytes(uint8Array).withUploadProgress(
+          (percentage) => {
+            setUploadProgress(percentage);
+          },
+        );
       }
 
       const chatId = await createChat.mutateAsync({
@@ -91,12 +105,12 @@ export default function CreateGroupModal({ onClose, onGroupCreated }: CreateGrou
         groupName: groupName.trim(),
         groupAvatar: avatarBlob,
       });
-      
-      toast.success('Group created successfully!');
+
+      toast.success("Group created successfully!");
       onGroupCreated(chatId);
       onClose();
-    } catch (error) {
-      toast.error('Failed to create group');
+    } catch (_error) {
+      toast.error("Failed to create group");
     }
   };
 
@@ -112,7 +126,7 @@ export default function CreateGroupModal({ onClose, onGroupCreated }: CreateGrou
               <Avatar className="h-20 w-20">
                 <AvatarImage src={avatarPreview} />
                 <AvatarFallback className="text-xl bg-primary/10">
-                  {groupName.charAt(0).toUpperCase() || 'G'}
+                  {groupName.charAt(0).toUpperCase() || "G"}
                 </AvatarFallback>
               </Avatar>
               <label
@@ -160,9 +174,13 @@ export default function CreateGroupModal({ onClose, onGroupCreated }: CreateGrou
                 placeholder="Search username..."
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               />
-              <Button onClick={handleSearch} disabled={searchUser.isPending} size="icon">
+              <Button
+                onClick={handleSearch}
+                disabled={searchUser.isPending}
+                size="icon"
+              >
                 {searchUser.isPending ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
@@ -181,9 +199,13 @@ export default function CreateGroupModal({ onClose, onGroupCreated }: CreateGrou
                     {foundUserProfile.username.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
-                <span className="text-sm font-medium">{foundUserProfile.username}</span>
+                <span className="text-sm font-medium">
+                  {foundUserProfile.username}
+                </span>
               </div>
-              <Button onClick={handleAddMember} size="sm">Add</Button>
+              <Button onClick={handleAddMember} size="sm">
+                Add
+              </Button>
             </div>
           )}
 
@@ -205,7 +227,9 @@ export default function CreateGroupModal({ onClose, onGroupCreated }: CreateGrou
           <Button
             onClick={handleCreateGroup}
             className="w-full"
-            disabled={createChat.isPending || !groupName.trim() || members.length === 0}
+            disabled={
+              createChat.isPending || !groupName.trim() || members.length === 0
+            }
           >
             {createChat.isPending ? (
               <>
@@ -213,7 +237,7 @@ export default function CreateGroupModal({ onClose, onGroupCreated }: CreateGrou
                 Creating Group...
               </>
             ) : (
-              'Create Group'
+              "Create Group"
             )}
           </Button>
         </div>
@@ -222,7 +246,10 @@ export default function CreateGroupModal({ onClose, onGroupCreated }: CreateGrou
   );
 }
 
-function MemberItem({ principal, onRemove }: { principal: Principal; onRemove: () => void }) {
+function MemberItem({
+  principal,
+  onRemove,
+}: { principal: Principal; onRemove: () => void }) {
   const { data: profile } = useGetUserProfile(principal);
 
   return (
@@ -231,12 +258,17 @@ function MemberItem({ principal, onRemove }: { principal: Principal; onRemove: (
         <Avatar className="h-8 w-8">
           <AvatarImage src={profile?.avatar?.getDirectURL()} />
           <AvatarFallback className="text-xs bg-primary/10">
-            {profile?.username.charAt(0).toUpperCase() || '?'}
+            {profile?.username.charAt(0).toUpperCase() || "?"}
           </AvatarFallback>
         </Avatar>
-        <span className="text-sm">{profile?.username || 'Loading...'}</span>
+        <span className="text-sm">{profile?.username || "Loading..."}</span>
       </div>
-      <Button variant="ghost" size="icon" onClick={onRemove} className="h-8 w-8">
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={onRemove}
+        className="h-8 w-8"
+      >
         <X className="h-4 w-4" />
       </Button>
     </div>

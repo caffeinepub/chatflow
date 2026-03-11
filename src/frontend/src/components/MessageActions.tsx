@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import { useEditMessage, useDeleteMessage } from '../hooks/useQueries';
-import { Button } from '@/components/ui/button';
-import { Edit2, Trash2 } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { MoreVertical } from 'lucide-react';
-import EditMessageModal from './EditMessageModal';
-import DeleteMessageDialog from './DeleteMessageDialog';
-import { Principal } from '@icp-sdk/core/principal';
+} from "@/components/ui/dropdown-menu";
+import type { Principal } from "@icp-sdk/core/principal";
+import { Edit2, Trash2 } from "lucide-react";
+import { MoreVertical } from "lucide-react";
+import { useState } from "react";
+import { useDeleteMessage, useEditMessage } from "../hooks/useQueries";
+import DeleteMessageDialog from "./DeleteMessageDialog";
+import EditMessageModal from "./EditMessageModal";
 
 interface MessageActionsProps {
   message: {
@@ -23,13 +23,17 @@ interface MessageActionsProps {
   chatId: string;
 }
 
-export default function MessageActions({ message, chatId }: MessageActionsProps) {
+export default function MessageActions({
+  message,
+  chatId,
+}: MessageActionsProps) {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const fiveMinutesInNanos = BigInt(5 * 60 * 1_000_000_000);
   const currentTime = BigInt(Date.now() * 1_000_000);
-  const isWithinEditWindow = (currentTime - message.timestamp) <= fiveMinutesInNanos;
+  const isWithinEditWindow =
+    currentTime - message.timestamp <= fiveMinutesInNanos;
 
   if (!isWithinEditWindow) {
     return null;

@@ -1,9 +1,19 @@
-import { useGetTotalUserCount, useGetTotalMessageCount, useIsCallerAdmin } from '../hooks/useQueries';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Users, MessageSquare, Shield } from 'lucide-react';
-import { useEffect } from 'react';
-import { toast } from 'sonner';
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { ArrowLeft, MessageSquare, Shield, Users } from "lucide-react";
+import { useEffect } from "react";
+import { toast } from "sonner";
+import {
+  useGetTotalMessageCount,
+  useGetTotalUserCount,
+  useIsCallerAdmin,
+} from "../hooks/useQueries";
 
 interface AdminPanelProps {
   onClose: () => void;
@@ -16,7 +26,7 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
 
   useEffect(() => {
     if (!adminLoading && !isAdmin) {
-      toast.error('Access denied: Admin privileges required');
+      toast.error("Access denied: Admin privileges required");
       onClose();
     }
   }, [isAdmin, adminLoading, onClose]);
@@ -25,7 +35,7 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
     return (
       <div className="flex h-screen items-center justify-center">
         <div className="text-center">
-          <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent mx-auto"></div>
+          <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent mx-auto" />
           <p className="text-muted-foreground">Loading admin panel...</p>
         </div>
       </div>
@@ -60,11 +70,15 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
           <div className="grid gap-4 md:grid-cols-2">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total Users</CardTitle>
+                <CardTitle className="text-sm font-medium">
+                  Total Users
+                </CardTitle>
                 <Users className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{totalUsers.toString()}</div>
+                <div className="text-2xl font-bold">
+                  {totalUsers.toString()}
+                </div>
                 <p className="text-xs text-muted-foreground">
                   Registered users on the platform
                 </p>
@@ -73,11 +87,15 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
 
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total Messages</CardTitle>
+                <CardTitle className="text-sm font-medium">
+                  Total Messages
+                </CardTitle>
                 <MessageSquare className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{totalMessages.toString()}</div>
+                <div className="text-2xl font-bold">
+                  {totalMessages.toString()}
+                </div>
                 <p className="text-xs text-muted-foreground">
                   Messages sent across all conversations
                 </p>
@@ -94,7 +112,8 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                User management features available. Contact system administrator for advanced operations.
+                User management features available. Contact system administrator
+                for advanced operations.
               </p>
             </CardContent>
           </Card>
@@ -103,7 +122,7 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
 
       <footer className="border-t bg-card px-6 py-4 text-center text-sm text-muted-foreground">
         <p>
-          © {new Date().getFullYear()} ChatFlow • Built with love using{' '}
+          © {new Date().getFullYear()} ChatFlow • Built with love using{" "}
           <a
             href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
             target="_blank"

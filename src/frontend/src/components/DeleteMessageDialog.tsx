@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import { useDeleteMessage } from '../hooks/useQueries';
 import {
   AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogCancel,
-  AlertDialogAction,
-} from '@/components/ui/alert-dialog';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
-import { toast } from 'sonner';
-import { Principal } from '@icp-sdk/core/principal';
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import type { Principal } from "@icp-sdk/core/principal";
+import { useState } from "react";
+import { toast } from "sonner";
+import { useDeleteMessage } from "../hooks/useQueries";
 
 interface DeleteMessageDialogProps {
   message: {
@@ -26,7 +26,11 @@ interface DeleteMessageDialogProps {
   onClose: () => void;
 }
 
-export default function DeleteMessageDialog({ message, chatId, onClose }: DeleteMessageDialogProps) {
+export default function DeleteMessageDialog({
+  message,
+  chatId,
+  onClose,
+}: DeleteMessageDialogProps) {
   const [deleteForEveryone, setDeleteForEveryone] = useState(false);
   const deleteMessage = useDeleteMessage();
 
@@ -37,10 +41,10 @@ export default function DeleteMessageDialog({ message, chatId, onClose }: Delete
         timestamp: message.timestamp,
         deleteForEveryone,
       });
-      toast.success('Message deleted successfully');
+      toast.success("Message deleted successfully");
       onClose();
-    } catch (error) {
-      toast.error('Failed to delete message');
+    } catch (_error) {
+      toast.error("Failed to delete message");
     }
   };
 
@@ -53,14 +57,19 @@ export default function DeleteMessageDialog({ message, chatId, onClose }: Delete
             Are you sure you want to delete this message?
           </AlertDialogDescription>
         </AlertDialogHeader>
-        
+
         <div className="flex items-center space-x-2 py-2">
           <Checkbox
             id="delete-for-everyone"
             checked={deleteForEveryone}
-            onCheckedChange={(checked) => setDeleteForEveryone(checked as boolean)}
+            onCheckedChange={(checked) =>
+              setDeleteForEveryone(checked as boolean)
+            }
           />
-          <Label htmlFor="delete-for-everyone" className="text-sm cursor-pointer">
+          <Label
+            htmlFor="delete-for-everyone"
+            className="text-sm cursor-pointer"
+          >
             Delete for everyone
           </Label>
         </div>
@@ -72,7 +81,7 @@ export default function DeleteMessageDialog({ message, chatId, onClose }: Delete
             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             disabled={deleteMessage.isPending}
           >
-            {deleteMessage.isPending ? 'Deleting...' : 'Delete'}
+            {deleteMessage.isPending ? "Deleting..." : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

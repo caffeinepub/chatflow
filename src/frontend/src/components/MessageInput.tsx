@@ -1,25 +1,25 @@
-import { useState, useRef } from 'react';
-import { useSendMessage } from '../hooks/useQueries';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Send, Paperclip, Smile } from 'lucide-react';
-import { toast } from 'sonner';
-import EmojiPicker from './EmojiPicker';
-import FileUploadButton from './FileUploadButton';
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Paperclip, Send, Smile } from "lucide-react";
+import { useRef, useState } from "react";
+import { toast } from "sonner";
+import { useSendMessage } from "../hooks/useQueries";
+import EmojiPicker from "./EmojiPicker";
+import FileUploadButton from "./FileUploadButton";
 
 interface MessageInputProps {
   chatId: string;
 }
 
 export default function MessageInput({ chatId }: MessageInputProps) {
-  const [message, setMessage] = useState('');
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [message, setMessage] = useState("");
+  const [_showEmojiPicker, _setShowEmojiPicker] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const sendMessage = useSendMessage();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!message.trim()) return;
 
     try {
@@ -27,17 +27,17 @@ export default function MessageInput({ chatId }: MessageInputProps) {
         chatId,
         content: message.trim(),
       });
-      setMessage('');
+      setMessage("");
       if (textareaRef.current) {
-        textareaRef.current.style.height = 'auto';
+        textareaRef.current.style.height = "auto";
       }
-    } catch (error) {
-      toast.error('Failed to send message');
+    } catch (_error) {
+      toast.error("Failed to send message");
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSubmit(e);
     }
@@ -49,10 +49,11 @@ export default function MessageInput({ chatId }: MessageInputProps) {
 
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
-    const newMessage = message.substring(0, start) + emoji + message.substring(end);
-    
+    const newMessage =
+      message.substring(0, start) + emoji + message.substring(end);
+
     setMessage(newMessage);
-    
+
     setTimeout(() => {
       textarea.focus();
       textarea.setSelectionRange(start + emoji.length, start + emoji.length);

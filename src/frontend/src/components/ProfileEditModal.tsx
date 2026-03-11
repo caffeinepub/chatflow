@@ -1,14 +1,22 @@
-import { useState, useEffect } from 'react';
-import { useGetCallerUserProfile, useSaveCallerUserProfile } from '../hooks/useQueries';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Camera, Loader2 } from 'lucide-react';
-import { ExternalBlob } from '../backend';
-import { toast } from 'sonner';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Camera, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { ExternalBlob } from "../backend";
+import {
+  useGetCallerUserProfile,
+  useSaveCallerUserProfile,
+} from "../hooks/useQueries";
 
 interface ProfileEditModalProps {
   onClose: () => void;
@@ -16,12 +24,12 @@ interface ProfileEditModalProps {
 
 export default function ProfileEditModal({ onClose }: ProfileEditModalProps) {
   const { data: userProfile } = useGetCallerUserProfile();
-  const [username, setUsername] = useState('');
-  const [status, setStatus] = useState('');
+  const [username, setUsername] = useState("");
+  const [status, setStatus] = useState("");
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
-  const [avatarPreview, setAvatarPreview] = useState<string>('');
+  const [avatarPreview, setAvatarPreview] = useState<string>("");
   const [uploadProgress, setUploadProgress] = useState(0);
-  
+
   const saveProfile = useSaveCallerUserProfile();
 
   useEffect(() => {
@@ -38,7 +46,7 @@ export default function ProfileEditModal({ onClose }: ProfileEditModalProps) {
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        toast.error('Image must be less than 5MB');
+        toast.error("Image must be less than 5MB");
         return;
       }
       setAvatarFile(file);
@@ -52,35 +60,37 @@ export default function ProfileEditModal({ onClose }: ProfileEditModalProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!username.trim()) {
-      toast.error('Please enter a username');
+      toast.error("Please enter a username");
       return;
     }
 
     try {
       let avatarBlob: ExternalBlob | undefined = userProfile?.avatar;
-      
+
       if (avatarFile) {
         const arrayBuffer = await avatarFile.arrayBuffer();
         const uint8Array = new Uint8Array(arrayBuffer);
-        avatarBlob = ExternalBlob.fromBytes(uint8Array).withUploadProgress((percentage) => {
-          setUploadProgress(percentage);
-        });
+        avatarBlob = ExternalBlob.fromBytes(uint8Array).withUploadProgress(
+          (percentage) => {
+            setUploadProgress(percentage);
+          },
+        );
       }
 
       await saveProfile.mutateAsync({
         username: username.trim(),
-        status: status.trim() || 'Hey there! I am using ChatFlow',
+        status: status.trim() || "Hey there! I am using ChatFlow",
         avatar: avatarBlob,
         isActive: true,
       });
 
-      toast.success('Profile updated successfully!');
+      toast.success("Profile updated successfully!");
       onClose();
     } catch (error) {
-      console.error('Profile update error:', error);
-      toast.error('Failed to update profile. Please try again.');
+      console.error("Profile update error:", error);
+      toast.error("Failed to update profile. Please try again.");
     }
   };
 
@@ -96,7 +106,7 @@ export default function ProfileEditModal({ onClose }: ProfileEditModalProps) {
               <Avatar className="h-24 w-24">
                 <AvatarImage src={avatarPreview} />
                 <AvatarFallback className="text-2xl bg-primary/10">
-                  {username.charAt(0).toUpperCase() || '?'}
+                  {username.charAt(0).toUpperCase() || "?"}
                 </AvatarFallback>
               </Avatar>
               <label
@@ -173,7 +183,7 @@ export default function ProfileEditModal({ onClose }: ProfileEditModalProps) {
                   Saving...
                 </>
               ) : (
-                'Save Changes'
+                "Save Changes"
               )}
             </Button>
           </div>

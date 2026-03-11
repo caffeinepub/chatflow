@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { useGetConversations } from '../hooks/useQueries';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Settings, Search, X } from 'lucide-react';
-import { useGetUserProfile } from '../hooks/useQueries';
-import GroupSettingsModal from './GroupSettingsModal';
-import { useSearchMessages } from '../hooks/useQueries';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Search, Settings, X } from "lucide-react";
+import { useState } from "react";
+import { useGetConversations } from "../hooks/useQueries";
+import { useGetUserProfile } from "../hooks/useQueries";
+import { useSearchMessages } from "../hooks/useQueries";
+import GroupSettingsModal from "./GroupSettingsModal";
 
 interface ChatHeaderProps {
   chatId: string;
@@ -14,11 +14,11 @@ interface ChatHeaderProps {
 
 export default function ChatHeader({ chatId }: ChatHeaderProps) {
   const { data: conversations = [] } = useGetConversations();
-  const conversation = conversations.find(c => c.chatId === chatId);
+  const conversation = conversations.find((c) => c.chatId === chatId);
   const [showSearch, setShowSearch] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [showGroupSettings, setShowGroupSettings] = useState(false);
-  
+
   const searchMessages = useSearchMessages(chatId, searchQuery);
 
   const isGroup = !!conversation?.groupName;
@@ -26,10 +26,10 @@ export default function ChatHeader({ chatId }: ChatHeaderProps) {
   const otherParticipant = !isGroup && lastMessage ? lastMessage.sender : null;
   const { data: otherUserProfile } = useGetUserProfile(otherParticipant);
 
-  const displayName = isGroup 
-    ? conversation?.groupName 
-    : otherUserProfile?.username || 'Unknown User';
-  
+  const displayName = isGroup
+    ? conversation?.groupName
+    : otherUserProfile?.username || "Unknown User";
+
   const displayAvatar = isGroup
     ? conversation?.groupAvatar?.getDirectURL()
     : otherUserProfile?.avatar?.getDirectURL();
@@ -44,7 +44,7 @@ export default function ChatHeader({ chatId }: ChatHeaderProps) {
             <Avatar className="h-10 w-10">
               <AvatarImage src={displayAvatar} />
               <AvatarFallback className="bg-primary/10">
-                {displayName?.charAt(0).toUpperCase() || '?'}
+                {displayName?.charAt(0).toUpperCase() || "?"}
               </AvatarFallback>
             </Avatar>
             <div>
@@ -61,7 +61,11 @@ export default function ChatHeader({ chatId }: ChatHeaderProps) {
               size="icon"
               onClick={() => setShowSearch(!showSearch)}
             >
-              {showSearch ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
+              {showSearch ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Search className="h-5 w-5" />
+              )}
             </Button>
             {isGroup && (
               <Button

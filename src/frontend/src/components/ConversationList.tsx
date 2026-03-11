@@ -1,35 +1,41 @@
-import { useState } from 'react';
-import { useGetConversations, useGetCallerUserProfile } from '../hooks/useQueries';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { MessageSquarePlus, Search } from 'lucide-react';
-import ConversationItem from './ConversationItem';
-import NewChatModal from './NewChatModal';
-import CreateGroupModal from './CreateGroupModal';
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Users } from 'lucide-react';
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { MessageSquarePlus, Search } from "lucide-react";
+import { Users } from "lucide-react";
+import { useState } from "react";
+import {
+  useGetCallerUserProfile,
+  useGetConversations,
+} from "../hooks/useQueries";
+import ConversationItem from "./ConversationItem";
+import CreateGroupModal from "./CreateGroupModal";
+import NewChatModal from "./NewChatModal";
 
 interface ConversationListProps {
   selectedChatId: string | null;
   onSelectChat: (chatId: string) => void;
 }
 
-export default function ConversationList({ selectedChatId, onSelectChat }: ConversationListProps) {
+export default function ConversationList({
+  selectedChatId,
+  onSelectChat,
+}: ConversationListProps) {
   const { data: conversations = [], isLoading } = useGetConversations();
   const { data: userProfile } = useGetCallerUserProfile();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [showNewChat, setShowNewChat] = useState(false);
   const [showCreateGroup, setShowCreateGroup] = useState(false);
 
   const filteredConversations = conversations.filter((conv) => {
     if (!searchQuery) return true;
-    const groupName = conv.groupName || '';
+    const groupName = conv.groupName || "";
     return groupName.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
@@ -72,7 +78,10 @@ export default function ConversationList({ selectedChatId, onSelectChat }: Conve
           {isLoading ? (
             <div className="p-4 space-y-3">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="flex items-center gap-3 p-3 rounded-lg animate-pulse">
+                <div
+                  key={i}
+                  className="flex items-center gap-3 p-3 rounded-lg animate-pulse"
+                >
                   <div className="h-12 w-12 rounded-full bg-muted" />
                   <div className="flex-1 space-y-2">
                     <div className="h-4 bg-muted rounded w-3/4" />
@@ -103,8 +112,18 @@ export default function ConversationList({ selectedChatId, onSelectChat }: Conve
         </ScrollArea>
       </div>
 
-      {showNewChat && <NewChatModal onClose={() => setShowNewChat(false)} onChatCreated={onSelectChat} />}
-      {showCreateGroup && <CreateGroupModal onClose={() => setShowCreateGroup(false)} onGroupCreated={onSelectChat} />}
+      {showNewChat && (
+        <NewChatModal
+          onClose={() => setShowNewChat(false)}
+          onChatCreated={onSelectChat}
+        />
+      )}
+      {showCreateGroup && (
+        <CreateGroupModal
+          onClose={() => setShowCreateGroup(false)}
+          onGroupCreated={onSelectChat}
+        />
+      )}
     </>
   );
 }

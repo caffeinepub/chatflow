@@ -1,28 +1,36 @@
-import { useState } from 'react';
-import { useSearchUser, useCreateChat } from '../hooks/useQueries';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Loader2, Search } from 'lucide-react';
-import { toast } from 'sonner';
-import { useGetUserProfile } from '../hooks/useQueries';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Loader2, Search } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { useCreateChat, useSearchUser } from "../hooks/useQueries";
+import { useGetUserProfile } from "../hooks/useQueries";
 
 interface NewChatModalProps {
   onClose: () => void;
   onChatCreated: (chatId: string) => void;
 }
 
-export default function NewChatModal({ onClose, onChatCreated }: NewChatModalProps) {
-  const [username, setUsername] = useState('');
+export default function NewChatModal({
+  onClose,
+  onChatCreated,
+}: NewChatModalProps) {
+  const [username, setUsername] = useState("");
   const searchUser = useSearchUser();
   const createChat = useCreateChat();
   const { data: foundUserProfile } = useGetUserProfile(searchUser.data || null);
 
   const handleSearch = async () => {
     if (!username.trim()) {
-      toast.error('Please enter a username');
+      toast.error("Please enter a username");
       return;
     }
     await searchUser.mutateAsync(username.trim());
@@ -30,7 +38,7 @@ export default function NewChatModal({ onClose, onChatCreated }: NewChatModalPro
 
   const handleCreateChat = async () => {
     if (!searchUser.data) {
-      toast.error('Please search for a user first');
+      toast.error("Please search for a user first");
       return;
     }
 
@@ -41,11 +49,11 @@ export default function NewChatModal({ onClose, onChatCreated }: NewChatModalPro
         groupName: null,
         groupAvatar: null,
       });
-      toast.success('Chat created successfully!');
+      toast.success("Chat created successfully!");
       onChatCreated(chatId);
       onClose();
-    } catch (error) {
-      toast.error('Failed to create chat');
+    } catch (_error) {
+      toast.error("Failed to create chat");
     }
   };
 
@@ -64,7 +72,7 @@ export default function NewChatModal({ onClose, onChatCreated }: NewChatModalPro
                 placeholder="Enter username..."
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               />
               <Button onClick={handleSearch} disabled={searchUser.isPending}>
                 {searchUser.isPending ? (
@@ -109,7 +117,7 @@ export default function NewChatModal({ onClose, onChatCreated }: NewChatModalPro
                     Creating Chat...
                   </>
                 ) : (
-                  'Start Chat'
+                  "Start Chat"
                 )}
               </Button>
             </div>
