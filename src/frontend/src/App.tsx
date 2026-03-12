@@ -40,7 +40,7 @@ export default function App() {
           <div className="text-center space-y-6 p-8 bg-card rounded-2xl shadow-2xl max-w-md w-full mx-4">
             <div className="space-y-2">
               <img
-                src="/assets/uploads/Red-and-White-Playful-Person-with-Crown-Instagram-Profile-Picture_20260311_090439_0000-1.png"
+                src="/assets/uploads/ChatFlow_20260311_091651_0000-1.png"
                 alt="ChatFlow Logo"
                 className="h-16 w-16 rounded-full object-cover mx-auto"
               />

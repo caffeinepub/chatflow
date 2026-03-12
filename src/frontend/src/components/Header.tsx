@@ -29,7 +29,7 @@ export default function Header({ onShowAdmin }: HeaderProps) {
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
             <img
-              src="/assets/uploads/Red-and-White-Playful-Person-with-Crown-Instagram-Profile-Picture_20260311_090439_0000-1.png"
+              src="/assets/uploads/ChatFlow_20260311_091651_0000-1.png"
               alt="ChatFlow Logo"
               className="h-8 w-8 rounded-full object-cover"
             />
