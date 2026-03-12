@@ -38,13 +38,12 @@ export default function App() {
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <div className="flex h-screen items-center justify-center bg-gradient-to-br from-[oklch(0.75_0.15_145)] to-[oklch(0.65_0.18_165)]">
           <div className="text-center space-y-6 p-8 bg-card rounded-2xl shadow-2xl max-w-md w-full mx-4">
-            <div className="space-y-2">
+            <div className="space-y-4">
               <img
-                src="/assets/uploads/ChatFlow_20260311_091651_0000-1.png"
+                src="/assets/generated/chatflow-logo-transparent.dim_400x120.png"
                 alt="ChatFlow Logo"
-                className="h-16 w-16 rounded-full object-cover mx-auto"
+                className="h-16 w-auto mx-auto"
               />
-              <h1 className="text-4xl font-bold text-foreground">ChatFlow</h1>
               <p className="text-muted-foreground">
                 Connect with friends and family
               </p>

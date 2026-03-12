@@ -27,14 +27,11 @@ export default function Header({ onShowAdmin }: HeaderProps) {
     <>
       <header className="border-b bg-card px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            <img
-              src="/assets/uploads/ChatFlow_20260311_091651_0000-1.png"
-              alt="ChatFlow Logo"
-              className="h-8 w-8 rounded-full object-cover"
-            />
-            <h1 className="text-xl font-bold text-foreground">ChatFlow</h1>
-          </div>
+          <img
+            src="/assets/generated/chatflow-logo-transparent.dim_400x120.png"
+            alt="ChatFlow Logo"
+            className="h-8 w-auto"
+          />
         </div>
 
         <div className="flex items-center gap-2">
